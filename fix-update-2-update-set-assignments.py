@@ -45,6 +45,9 @@ def create_or_retrieve_parent_update_set(base_update_set, root, new_base_set_nam
         parent_application = ET.SubElement(parent_update_set, 'application')
         parent_application.text = 'global'
 
+        parent_state = ET.SubElement(parent_update_set, 'state')
+        parent_state.text = 'loaded'
+
         parent_sys_id_string = generate_sys_id()
         
         parent_sys_id = ET.SubElement(parent_update_set, 'sys_id')
@@ -101,7 +104,7 @@ def update_remote_update_set_elements(root, application_id_map):
                     remote_update_set_element.text = update_set_id
                     remote_update_set_element.set('display_value', '')
 
-def create_sys_remote_update_set_elements(unmatched_applications, root, new_base_set_name_child, parent_sys_id_string, created_by_email):
+def generate_child_update_sets(unmatched_applications, root, new_base_set_name_child, parent_sys_id_string, created_by_email):
     application_id_map = {}
     for unmatched_application in unmatched_applications:
         sys_remote_update_set = ET.Element('sys_remote_update_set')
@@ -109,6 +112,9 @@ def create_sys_remote_update_set_elements(unmatched_applications, root, new_base
         
         application = ET.SubElement(sys_remote_update_set, 'application')
         application.text = unmatched_application
+
+        state = ET.SubElement(sys_remote_update_set, 'state')
+        state.text = 'in_hierarchy'
 
         name = ET.SubElement(sys_remote_update_set, 'name')
         name.text = new_base_set_name_child
@@ -219,7 +225,7 @@ def main():
     update_sys_remote_update_set_elements(root, matched_applications, parent_sys_id_string)
 
     # Invoke the function to create sys_remote_update_set elements
-    application_id_map = create_sys_remote_update_set_elements(unmatched_applications, root, new_child_name, parent_sys_id_string, created_by_email)
+    application_id_map = generate_child_update_sets(unmatched_applications, root, new_child_name, parent_sys_id_string, created_by_email)
 
     # Call the function to update 'remote_update_set' elements
     update_remote_update_set_elements(root, application_id_map)
