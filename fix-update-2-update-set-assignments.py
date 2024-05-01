@@ -42,6 +42,9 @@ def create_or_retrieve_parent_update_set(base_update_set, root, new_base_set_nam
         parent_name = ET.SubElement(parent_update_set, 'name')
         parent_name.text = new_base_set_name_parent
 
+        parent_application = ET.SubElement(parent_update_set, 'application')
+        parent_application.text = 'global'
+
         parent_sys_id_string = generate_sys_id()
         
         parent_sys_id = ET.SubElement(parent_update_set, 'sys_id')
