@@ -146,11 +146,10 @@ def generate_child_update_sets(unmatched_applications, root, new_base_set_name_c
 def generate_update_set_names(update_set_name):
     suffix_parent = " - Batch Parent"
     suffix_child = " - Batch Child"
-    max_length = 79
-    base_name_length_parent = max_length - len(suffix_parent)
-    base_name_length_child = max_length - len(suffix_child)
-    new_base_set_name_parent = update_set_name[:base_name_length_parent] + suffix_parent
-    new_base_set_name_child = update_set_name[:base_name_length_child] + suffix_child
+    max_length = 80
+    base_name_length = max_length - len(suffix_parent)
+    new_base_set_name_parent = update_set_name[:base_name_length] + suffix_parent
+    new_base_set_name_child = update_set_name[:base_name_length] + suffix_child
     return new_base_set_name_parent, new_base_set_name_child
 
 def infer_base_update_set_name_from_single_update_set(root):
